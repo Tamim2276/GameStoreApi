@@ -1,4 +1,15 @@
 GET http://localhost:5076/games
 
 ###
-GET http://localhost:5076/games/3
+GET http://localhost:5076/games/6
+
+###
+POST http://localhost:5076/games
+Content-Type: application/json
+
+{
+    "name" : "Black Myth Wukong",
+    "genre" : "Action RPG",
+    "price" : 59.99,
+    "releaseDate" : "2024-02-01"
+}

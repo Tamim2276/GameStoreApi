@@ -1,6 +1,6 @@
 # GameStore.Api
 
-A simple ASP.NET Core Minimal API for listing games from an in-memory collection.
+A simple ASP.NET Core Minimal API for managing games using an in-memory collection.
 
 ## Prerequisites
 
@@ -37,6 +37,7 @@ GET http://localhost:5076/games
 
 - Method: `GET`
 - Route: `/games/{id}`
+- Named route: `GetGameById`
 
 Example:
 
@@ -44,30 +45,73 @@ Example:
 GET http://localhost:5076/games/3
 ```
 
-If the game is not found, the current implementation returns `null`.
+Returns `null` if the game is not found.
 
-## Data Model
+### Create a game
 
-Each game includes:
+- Method: `POST`
+- Route: `/games`
+- Named route: `CreateGame`
+- Content-Type: `application/json`
 
-- `id` (integer)
+Request body:
+
+```json
+{
+  "name": "Hollow Knight",
+  "genre": "Metroidvania",
+  "price": 14.99,
+  "releaseDate": "2017-02-24"
+}
+```
+
+Example:
+
+```http
+POST http://localhost:5076/games
+Content-Type: application/json
+
+{
+  "name": "Hollow Knight",
+  "genre": "Metroidvania",
+  "price": 14.99,
+  "releaseDate": "2017-02-24"
+}
+```
+
+Returns `201 Created` with a `Location` header pointing to the new game's URL and the created game as the response body.
+
+## Data Models
+
+### Game (response)
+
+- `id` (integer) — auto-assigned
 - `name` (string)
 - `genre` (string)
 - `price` (decimal)
 - `releaseDate` (date)
 
-Example response item:
+Example:
 
 ```json
 {
-  "id": 1,
-  "name": "The Legend of Zelda: Breath of the Wild",
-  "genre": "Action-adventure",
-  "price": 59.99,
-  "releaseDate": "2017-03-03"
+  "id": 6,
+  "name": "Hollow Knight",
+  "genre": "Metroidvania",
+  "price": 14.99,
+  "releaseDate": "2017-02-24"
 }
 ```
 
+### CreateGame (request body for POST)
+
+- `name` (string)
+- `genre` (string)
+- `price` (decimal)
+- `releaseDate` (date)
+
+Note: `id` is not required — it is assigned automatically.
+
 ## HTTP File
 
-You can use `games.http` to quickly test endpoints from VS Code/Visual Studio.
+You can use `games.http` to quickly test all endpoints from VS Code/Visual Studio.
