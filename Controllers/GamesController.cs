@@ -77,4 +77,21 @@ public class GamesController : ControllerBase
             gameDto
         );
     }
+
+    // DELETE /games/{id}
+
+    [HttpDelete ("{id}")]
+
+    public ActionResult DeleteGame(int id)
+    {
+        var game = games.FirstOrDefault(g => g.Id == id);
+
+        if (game == null)
+        {
+            return NotFound();
+        }
+
+        games.Remove(game);
+        return NoContent();
+    }
 }
