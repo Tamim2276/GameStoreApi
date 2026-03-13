@@ -17,6 +17,10 @@ public class GamesController : ControllerBase
         new Game { Id = 5, Name = "Minecraft", Genre = "Sandbox", Price = 26.95m, ReleaseDate = new DateOnly(2011, 11, 18) }
     };
 
+    /// <summary>
+    /// Gets all games.
+    /// </summary>
+    /// <returns>A list of games.</returns>
     // GET /games
     [HttpGet]
     public ActionResult<List<GameDto>> GetAllGames()
@@ -30,6 +34,11 @@ public class GamesController : ControllerBase
         return Ok(gameDtos);
     }
 
+    /// <summary>
+    /// Gets a game by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the game to get.</param>
+    /// <returns>The game with the specified ID.</returns>
     // GET /games/{id}
     [HttpGet("{id}")]
     public ActionResult<GameDto> GetGameById(int id)
@@ -50,6 +59,11 @@ public class GamesController : ControllerBase
         return Ok(gameDto);
     }
 
+    /// <summary>
+    /// Creates a new game.
+    /// </summary>
+    /// <param name="newGame">The new game to create.</param>
+    /// <returns>The created game.</returns>
     // POST /games
     [HttpPost]
     public ActionResult<GameDto> CreateGame(CreateGameDto newGame)
@@ -78,6 +92,11 @@ public class GamesController : ControllerBase
         );
     }
 
+    /// <summary>
+    /// Deletes a game by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the game to delete.</param>
+    /// <returns>An empty response.</returns>
     // DELETE /games/{id}
 
     [HttpDelete ("{id}")]

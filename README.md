@@ -81,6 +81,19 @@ Content-Type: application/json
 
 Returns `201 Created` with a `Location` header pointing to the new game's URL and the created game as the response body.
 
+### Delete a game
+
+- Method: `DELETE`
+- Route: `/games/{id}`
+
+Example:
+
+```http
+DELETE http://localhost:5076/games/1
+```
+
+Returns `204 No Content` if the game was deleted successfully.
+
 ## Data Models
 
 ### Game (response)
