@@ -94,6 +94,39 @@ DELETE http://localhost:5076/games/1
 
 Returns `204 No Content` if the game was deleted successfully.
 
+### Update a game
+
+- Method: `PUT`
+- Route: `/games/{id}`
+- Content-Type: `application/json`
+
+Request body:
+
+```json
+{
+  "name": "Hollow Knight: Silksong",
+  "genre": "Metroidvania",
+  "price": 29.99,
+  "releaseDate": "2024-12-31"
+}
+```
+
+Example:
+
+```http
+PUT http://localhost:5076/games/6
+Content-Type: application/json
+
+{
+  "name": "Hollow Knight: Silksong",
+  "genre": "Metroidvania",
+  "price": 29.99,
+  "releaseDate": "2024-12-31"
+}
+```
+
+Returns `204 No Content` if the game was updated successfully.
+
 ## Data Models
 
 ### Game (response)

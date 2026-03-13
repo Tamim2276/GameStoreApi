@@ -1,3 +1,4 @@
+
 GET http://localhost:5076/games
 
 ###
@@ -8,8 +9,22 @@ POST http://localhost:5076/games
 Content-Type: application/json
 
 {
-    "name" : "Black Myth Wukong",
+    "name" : "Cyberpunk 2077",
     "genre" : "Action RPG",
-    "price" : 59.99,
-    "releaseDate" : "2024-02-01"
+    "price" : 49.99,
+    "releaseDate" : "2020-12-10"
+}
+
+###
+DELETE http://localhost:5076/games/2
+
+###
+PUT http://localhost:5076/games/6
+Content-Type: application /json
+
+{
+    "name" : "Cyberpunk 2077 Phantom Liberty",
+    "genre" : "Action RPG",
+    "price" : 49.99,
+    "releaseDate" : "2020-12-10"
 }

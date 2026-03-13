@@ -113,4 +113,27 @@ public class GamesController : ControllerBase
         games.Remove(game);
         return NoContent();
     }
+
+    /// <summary>
+    /// Updates a game by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the game to update.</param>
+    /// <param name="updatedGame">The updated game data.</param>
+    /// <returns>An empty response.</returns>
+    [HttpPut("{id}")]
+    public ActionResult UpdateGame (int id, UpdateGameDto updatedGame)
+    {
+        var game = games.FirstOrDefault(g => g.Id == id);
+
+        if (game == null)
+        {
+            return NotFound();
+        }
+
+        game.Name = updatedGame.Name;
+        game.Genre = updatedGame.Genre;
+        game.Price = updatedGame.Price;
+        game.ReleaseDate = updatedGame.ReleaseDate;
+        return NoContent();
+    }
 }
