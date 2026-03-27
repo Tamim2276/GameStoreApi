@@ -1,6 +1,7 @@
 using GameStore.Api.Dtos;
 using GameStore.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Api.Controllers;
 
@@ -123,6 +124,11 @@ public class GamesController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult UpdateGame (int id, UpdateGameDto updatedGame)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var game = games.FirstOrDefault(g => g.Id == id);
 
         if (game == null)

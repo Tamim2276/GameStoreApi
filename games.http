@@ -11,7 +11,7 @@ Content-Type: application/json
 {
     "name" : "Cyberpunk 2077",
     "genre" : "Action RPG",
-    "price" : 49.99,
+    "price" : 69.99,
     "releaseDate" : "2020-12-10"
 }
 
@@ -25,6 +25,6 @@ Content-Type: application /json
 {
     "name" : "Cyberpunk 2077 Phantom Liberty",
     "genre" : "Action RPG",
-    "price" : 49.99,
+    "price" : 700.99,
     "releaseDate" : "2020-12-10"
 }
