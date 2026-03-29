@@ -20,7 +20,7 @@ DELETE http://localhost:5076/games/2
 
 ###
 PUT http://localhost:5076/games/6
-Content-Type: application /json
+Content-Type: application/json
 
 {
     "name" : "Cyberpunk 2077 Phantom Liberty",

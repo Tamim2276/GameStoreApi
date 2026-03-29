@@ -1,6 +1,6 @@
 # GameStore.Api
 
-A simple ASP.NET Core Minimal API for managing games using an in-memory collection.
+A simple ASP.NET Core Web API for managing games using an in-memory collection.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Example:
 GET http://localhost:5076/games/3
 ```
 
-Returns `null` if the game is not found.
+Returns `404 Not Found` if the game is not found.
 
 ### Create a game
 
