@@ -22,6 +22,6 @@ var app = builder.Build();
 
 // Map controller actions to HTTP endpoints
 app.MapControllers();
-
+app.MigrateDatabase(); // Apply any pending database migrations on startup
 // Start the web server and listen for requests
 app.Run();
