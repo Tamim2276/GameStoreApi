@@ -1,22 +1,26 @@
 # GameStore.Api
 
-An ASP.NET Core Web API for managing a game store with games and genres. Built with Entity Framework Core and SQLite.
+A comprehensive ASP.NET Core REST API for managing a game store with games and genres. Built with Entity Framework Core, SQLite, and featuring full CRUD operations, data validation, and automatic database migrations.
 
-## Project Overview
+## Overview
 
-This is a RESTful API that allows you to:
+**GameStore.Api** is a production-ready game management API that demonstrates:
+- ✅ RESTful API design with proper HTTP methods
+- ✅ Entity Framework Core with SQLite persistence
+- ✅ Data Transfer Objects (DTOs) for request/response validation
+- ✅ Automatic database migrations on startup
+- ✅ Comprehensive error handling (404, 400, 201, 204)
+- ✅ In-memory in-flight operations with database persistence
+- ✅ Extensive code documentation and comments
+- ✅ Dependency injection and extension methods
 
-- Retrieve all games or a specific game by ID
-- Create new games with genre and pricing
-- Update existing games
-- Delete games from the collection
+## Tech Stack
 
-**Tech Stack:**
-
-- ASP.NET Core (net10.0)
-- Entity Framework Core with SQLite
-- Data Transfer Objects (DTOs) for request/response validation
-- In-memory collection with database context ready for migration
+- **Framework**: ASP.NET Core (.NET 10.0)
+- **ORM**: Entity Framework Core (10.0.5)
+- **Database**: SQLite
+- **Language**: C# 13+
+- **HTTP**: REST API
 
 ## Prerequisites
 
@@ -31,10 +35,15 @@ dotnet restore
 dotnet run
 ```
 
-By default, the app runs on:
+The API will start on:
+- **HTTP**: `http://localhost:5076`
+- **HTTPS**: `https://localhost:7262` (when using the `https` profile)
 
-- `http://localhost:5076`
-- `https://localhost:7262` (when using the `https` launch profile)
+### Apply Database Migrations (Optional)
+```bash
+dotnet ef database update
+```
+Note: Migrations are applied automatically on startup via `app.MigrateDatabase()`.
 
 ## API Endpoints
 
@@ -67,19 +76,24 @@ Returns `404 Not Found` if the game is not found.
 
 - Method: `POST`
 - Route: `/games`
-- Named route: `CreateGame`
 - Content-Type: `application/json`
 
 Request body:
 
 ```json
 {
-  "name": "Hollow Knight",
-  "genre": "Metroidvania",
-  "price": 14.99,
-  "releaseDate": "2017-02-24"
+  "name": "Cyberpunk 2077",
+  "genreId": 3,
+  "price": 69.99,
+  "releaseDate": "2020-12-10"
 }
 ```
+
+**Validation Rules:**
+- `name`: Required, max 100 characters
+- `genreId`: Required, must be 1-50 (valid genres: 1=Action-adventure, 2=Platformer, 3=Action RPG, 4=Sandbox)
+- `price`: Required, must be 1-100 USD
+- `releaseDate`: Required, valid ISO date format (YYYY-MM-DD)
 
 Example:
 
@@ -88,14 +102,14 @@ POST http://localhost:5076/games
 Content-Type: application/json
 
 {
-  "name": "Hollow Knight",
-  "genre": "Metroidvania",
-  "price": 14.99,
-  "releaseDate": "2017-02-24"
+  "name": "Cyberpunk 2077",
+  "genreId": 3,
+  "price": 69.99,
+  "releaseDate": "2020-12-10"
 }
 ```
 
-Returns `201 Created` with a `Location` header pointing to the new game's URL and the created game as the response body.
+Returns `201 Created` with a `Location` header and the created game.
 
 ### Delete a game
 
@@ -120,12 +134,14 @@ Request body:
 
 ```json
 {
-  "name": "Hollow Knight: Silksong",
-  "genre": "Metroidvania",
-  "price": 29.99,
-  "releaseDate": "2024-12-31"
+  "name": "Cyberpunk 2077 Phantom Liberty",
+  "genreId": 3,
+  "price": 70.99,
+  "releaseDate": "2020-12-10"
 }
 ```
+
+**Validation Rules:** Same as Create (see above)
 
 Example:
 
@@ -134,10 +150,10 @@ PUT http://localhost:5076/games/6
 Content-Type: application/json
 
 {
-  "name": "Hollow Knight: Silksong",
-  "genre": "Metroidvania",
-  "price": 29.99,
-  "releaseDate": "2024-12-31"
+  "name": "Cyberpunk 2077 Phantom Liberty",
+  "genreId": 3,
+  "price": 70.99,
+  "releaseDate": "2020-12-10"
 }
 ```
 
@@ -228,12 +244,18 @@ public class Genre
 
 When creating or updating a game, the following rules apply:
 
-| Field       | Rule                                | Example                     |
-| ----------- | ----------------------------------- | --------------------------- |
-| Name        | Required, max 100 characters        | "Zelda: Breath of the Wild" |
-| Genre       | Required, max 20 characters         | "Action-adventure"          |
-| Price       | Required, must be between 1 and 100 | 59.99                       |
-| ReleaseDate | Required, valid date format         | "2017-03-03"                |
+| Field       | Rule                                | Example             | Notes |
+| ----------- | ----------------------------------- | ------------------- | ----- |
+| Name        | Required, max 100 characters        | "Cyberpunk 2077"    | Game title |
+| GenreId     | Required, 1-50 range                | 3                   | See seeded genres below |
+| Price       | Required, 1-100 USD                 | 69.99               | Decimal value |
+| ReleaseDate | Required, ISO date format           | "2020-12-10"        | YYYY-MM-DD format |
+
+**Seeded Genres:**
+1. Action-adventure
+2. Platformer
+3. Action RPG
+4. Sandbox
 
 If validation fails, the API returns a `400 Bad Request` with error details.
 
@@ -273,13 +295,16 @@ Use `games.http` file in VS Code (with REST Client extension) or Postman to test
 # Get all games
 GET http://localhost:5076/games
 
+# Get a specific game
+GET http://localhost:5076/games/1
+
 # Create a game
 POST http://localhost:5076/games
 Content-Type: application/json
 
 {
     "name": "Cyberpunk 2077",
-    "genre": "Action RPG",
+    "genreId": 3,
     "price": 69.99,
     "releaseDate": "2020-12-10"
 }
@@ -290,7 +315,7 @@ Content-Type: application/json
 
 {
     "name": "Cyberpunk 2077 Phantom Liberty",
-    "genre": "Action RPG",
+    "genreId": 3,
     "price": 70.99,
     "releaseDate": "2020-12-10"
 }
