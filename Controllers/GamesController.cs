@@ -83,7 +83,7 @@ public class GamesController : ControllerBase
     /// <returns>201 Created with Location header and the created game data.</returns>
     // POST /games
     [HttpPost]
-    public async Task<ActionResult<GameDto>> CreateGame(CreateGameDto newGame)
+    public async Task<ActionResult<GameDetailsDto>> CreateGame(CreateGameDto newGame)
     {
         var genre = await _context.Genres.FindAsync(newGame.GenreId);
 
@@ -105,10 +105,10 @@ public class GamesController : ControllerBase
         await _context.SaveChangesAsync();
 
         // Map to DTO for response
-        var gameDto = new GameDto(
+        var gameDto = new GameDetailsDto(
             game.Id,
             game.Name,
-            genre.Name,
+            game.GenreId,
             game.Price,
             game.ReleaseDate
         );
